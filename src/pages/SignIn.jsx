@@ -13,11 +13,13 @@ import LockIcon from "@mui/icons-material/Lock";
 import PersonIcon from "@mui/icons-material/Person";
 import KeyIcon from "@mui/icons-material/Key";
 import { Header, Footer } from "../layouts/index";
+import { useNavigate } from "react-router-dom";
 
 const SignIn = () => {
-  const handleSubmit = async () => {};
-
-  const forgotPasswordHandle = () => {};
+  const navigate = useNavigate();
+  const handleSubmit = async () => {
+    navigate("/dashboard");
+  };
 
   return (
     <>
