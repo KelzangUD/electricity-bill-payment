@@ -10,10 +10,10 @@ const router = createBrowserRouter([
     element: <SignIn />,
   },
    {
-    path: "/dashboard",
-    Component: Dashboard,
+    path: "/home",
+    Component: Home,
     children: [
-      { index: true, Component: Home },
+      { index: true, Component: Dashboard },
       // { path: "settings", Component: Settings },
     ],
   },

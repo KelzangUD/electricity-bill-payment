@@ -18,7 +18,7 @@ import { useNavigate } from "react-router-dom";
 const SignIn = () => {
   const navigate = useNavigate();
   const handleSubmit = async () => {
-    navigate("/dashboard");
+    navigate("/home");
   };
 
   return (
