@@ -15,6 +15,14 @@ const Drawer = styled(MuiDrawer)({
   },
 });
 
+const Wrapper = ({ component: Component }) => {
+  return (
+    <>
+      <Component />
+    </>
+  );
+};
+
 export default function SideNav() {
   return (
     <Drawer
@@ -23,7 +31,7 @@ export default function SideNav() {
         display: { xs: "none", md: "block" },
       }}
     >
-      <MainMenu />
+      <Wrapper component={MainMenu} />
     </Drawer>
   );
 }

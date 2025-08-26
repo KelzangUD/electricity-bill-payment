@@ -1,20 +1,18 @@
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
-import { SignIn, Dashboard, Home } from './pages/index';
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { SignIn, Dashboard, Home, Users, Meters } from "./pages/index";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <SignIn />,
   },
-   {
+  {
     path: "/home",
     Component: Home,
     children: [
       { index: true, Component: Dashboard },
-      // { path: "settings", Component: Settings },
+      { path: "meters", Component: Meters },
+      { path: "users", Component: Users },
     ],
   },
 ]);

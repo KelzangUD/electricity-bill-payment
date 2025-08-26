@@ -22,6 +22,7 @@ export default function MainMenu() {
   const navigation = useNavigate();
   const [openStates, setOpenStates] = useState([]);
   const handleNestedItemClick = (index) => {
+    console.log(index);
     setOpenStates((prevOpenStates) => {
       const isAlreadyOpen = prevOpenStates[index];
       const newOpenStates = prevOpenStates.map(() => false);
@@ -83,8 +84,11 @@ export default function MainMenu() {
               item?.nestedItems?.length > 0 && (
                 <ListItemButton
                   onClick={() => {
-                    navigation(item?.route);
-                    handleNestedItemClick(item?.itemNumber);
+                    if (item?.nestedItems?.length > 0) {
+                      handleNestedItemClick(index);
+                    } else {
+                      navigation(item?.route);
+                    }
                   }}
                 >
                   <ListItemIcon>{item.icon}</ListItemIcon>

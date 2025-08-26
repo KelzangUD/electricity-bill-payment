@@ -8,13 +8,13 @@ import {
   MenuItem,
   Menu,
   Toolbar,
-  Tooltip,
+  // Tooltip,
   Typography,
 } from "@mui/material";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import PersonIcon from "@mui/icons-material/Person";
 import MenuIcon from "@mui/icons-material/Menu";
-import HomeIcon from "@mui/icons-material/Home";
+// import HomeIcon from "@mui/icons-material/Home";
 import Logout from "@mui/icons-material/Logout";
 import { useNavigate, useLocation } from "react-router-dom";
 import { drawerClasses } from "@mui/material/Drawer";
@@ -53,7 +53,9 @@ const Nav = () => {
     setAnchorEl(false);
   };
 
-  const logoutHandle = async () => {};
+  const logoutHandle = async () => {
+    navigation("/");
+  };
 
   const menuId = "primary-search-account-menu";
   const renderMenu = (
@@ -145,7 +147,7 @@ const Nav = () => {
             {currentLocation.toUpperCase()}
           </Typography>
           <Box>
-            <Tooltip title="Redirect to SSO">
+            {/* <Tooltip title="Redirect to SSO">
               <IconButton
                 size="small"
                 edge="end"
@@ -159,7 +161,7 @@ const Nav = () => {
               >
                 <HomeIcon sx={{ height: { xs: 20, md: 25 }, width: "auto" }} />
               </IconButton>
-            </Tooltip>
+            </Tooltip> */}
             <IconButton
               size="small"
               edge="end"

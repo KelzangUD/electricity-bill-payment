@@ -1,6 +1,6 @@
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import SettingsIcon from "@mui/icons-material/Settings";
-import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
+import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
 
 export const MenuItems = [
   {
@@ -28,8 +28,8 @@ export const MenuItems = [
     itemNumber: 1,
     nestedItems: [
       {
-        page: "Region",
-        route: "/region",
+        page: "Meters",
+        route: "/home/meters",
       },
     ],
   },
@@ -47,7 +47,7 @@ export const MenuItems = [
     nestedItems: [
       {
         page: "System Users",
-        route: "/users",
+        route: "/home/users",
       },
     ],
   },
