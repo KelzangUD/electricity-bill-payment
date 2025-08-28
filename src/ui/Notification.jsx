@@ -28,7 +28,7 @@ export default function Notification({
         keepMounted
         onClose={() => setOpen(false)}
         aria-describedby="description"
-        // fullWidth
+        fullWidth
       >
         <DialogContent>
           <DialogContentText

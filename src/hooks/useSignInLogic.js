@@ -21,6 +21,7 @@ export default function useSignInLogic() {
   });
   const [showNotification, setShowNotification] = useState(false);
   const [notificationMessage, setNotificationMessage] = useState("");
+  const [severity, setSeverity] = useState("success");
   const [isLoading, setIsLoading] = useState(false);
   const handleChange = (e) => {
     setHelperText({
@@ -66,6 +67,7 @@ export default function useSignInLogic() {
           }
         }
         if (res?.status === 403) {
+          setSeverity("error");
           setNotificationMessage(
             "Failed To Sign In. Please use correct credential!"
           );
@@ -73,6 +75,7 @@ export default function useSignInLogic() {
         }
       } catch (error) {
         // console.error("Error during sign-in:", error);
+        setSeverity("error");
         setNotificationMessage("Failed To Sign In.");
         setShowNotification(true);
       } finally {
@@ -90,5 +93,6 @@ export default function useSignInLogic() {
     showNotification,
     setShowNotification,
     notificationMessage,
+    severity
   };
 }

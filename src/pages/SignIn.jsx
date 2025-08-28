@@ -26,6 +26,7 @@ const SignIn = () => {
     showNotification,
     setShowNotification,
     notificationMessage,
+    severity,
   } = useSignInLogic();
 
   return (
@@ -150,6 +151,7 @@ const SignIn = () => {
           open={showNotification}
           setOpen={setShowNotification}
           message={notificationMessage}
+          severity={severity}
         />
       )}
     </>
