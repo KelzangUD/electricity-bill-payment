@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import Route from "../routes/Route";
 
 export default function useUsersLogic() {
@@ -7,12 +7,13 @@ export default function useUsersLogic() {
   const [users, setUsers] = useState([]);
   const [addNew, setAddNew] = useState(false);
   const [userDetails, setUserDetails] = useState(null);
+  const [edit, setEdit] = useState(false);
   const fetchUsers = async () => {
     setIsLoading(true);
     try {
       const response = await Route(
         "GET",
-        "/api/v1/mangement",
+        "/api/v1/management",
         token,
         null,
         null
@@ -37,18 +38,19 @@ export default function useUsersLogic() {
     // eslint-disable-next-line
   }, []);
   const fetchDetails = async (empId) => {
-    console.log(empId);
     setIsLoading(true);
     try {
       const response = await Route(
         "GET",
-        `/api/v1/mangement/getUserDtls/${empId}`,
+        `/api/v1/management/getUserDtls/${empId}`,
         token,
         null,
         null
       );
+      console.log(response);
       if (response?.status === 200) {
         setUserDetails(response?.data);
+        setEdit(true);
       }
     } catch (err) {
       console.log(err);
@@ -63,5 +65,8 @@ export default function useUsersLogic() {
     setAddNew,
     fetchUsers,
     fetchDetails,
+    userDetails,
+    edit,
+    setEdit,
   };
 }

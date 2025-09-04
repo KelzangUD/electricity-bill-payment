@@ -1,13 +1,22 @@
 import { Box, Button, Grid } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { DataTable, Loader } from "../ui/index";
-import { NewUser } from "../components/index";
+import { NewUser, EditUser } from "../components/index";
 import { UsersColumns } from "../constants/columns";
 import useUsersLogic from "../hooks/useUsersLogic";
 
 const Users = () => {
-  const { users, isLoading, addNew, setAddNew, fetchUsers, fetchDetails } =
-    useUsersLogic();
+  const {
+    users,
+    isLoading,
+    addNew,
+    setAddNew,
+    fetchUsers,
+    fetchDetails,
+    userDetails,
+    edit,
+    setEdit,
+  } = useUsersLogic();
   return (
     <>
       <Box
@@ -45,6 +54,14 @@ const Users = () => {
         <NewUser open={addNew} setOpen={setAddNew} fetchUsers={fetchUsers} />
       )}
       {isLoading && <Loader open={isLoading} />}
+      {edit && (
+        <EditUser
+          open={edit}
+          setOpen={setEdit}
+          fetchUsers={fetchUsers}
+          userDetails={userDetails}
+        />
+      )}
     </>
   );
 };
