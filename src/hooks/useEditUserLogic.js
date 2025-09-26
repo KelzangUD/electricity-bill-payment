@@ -82,7 +82,7 @@ const useEditUserLogic = (fetchUsers, userDetails) => {
       try {
         const res = await Route(
           "PUT",
-          `/api/v1/meter?fname=${newUserDetails?.fname}&mname=${newUserDetails?.mname}&lname=${newUserDetails?.lname}&mobileNo=${newUserDetails?.mobileNo}&email=${newUserDetails?.email}&status=Active&roleId=${newUserDetails?.roleId}&updatedBy=${newUserDetails?.updatedBy}&userId=${newUserDetails?.userId}&empId=${newUserDetails?.empId}`,
+          `/api/v1/management?fname=${newUserDetails?.fname}&mname=${newUserDetails?.mname}&lname=${newUserDetails?.lname}&mobileNo=${newUserDetails?.mobileNo}&email=${newUserDetails?.email}&status=Active&roleId=${newUserDetails?.roleId}&updatedBy=${newUserDetails?.updatedBy}&userId=${newUserDetails?.userId}&empId=${newUserDetails?.empId}`,
           access_token,
           null,
           null

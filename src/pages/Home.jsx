@@ -15,7 +15,7 @@ const Item = styled(Paper)(({ theme }) => ({
 const Home = () => {
   return (
     <>
-      <Box sx={{ display: "flex" }}>
+      <Box sx={{ display: "flex", }}>
         <SideNav />
         <Box
           sx={{

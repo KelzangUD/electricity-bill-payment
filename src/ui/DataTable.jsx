@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Box, InputAdornment, TextField, Tooltip } from "@mui/material";
 import {
   DataGrid,
@@ -13,6 +14,7 @@ import { styled } from "@mui/material/styles";
 import CancelIcon from "@mui/icons-material/Cancel";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import SearchIcon from "@mui/icons-material/Search";
+import { getSelectedRowIds } from "../util/CommonUtil";
 
 const StyledGridOverlay = styled("div")(({ theme }) => ({
   display: "flex",
@@ -169,20 +171,47 @@ function CustomToolbar() {
       </Tooltip>
     </Toolbar>
   );
-};
+}
 
-const DataTable = ({ columns, rows, loading }) => {
+const DataTable = ({
+  columns,
+  rows = [],
+  loading = false,
+  checkboxSelection = false,
+  onSelectionChange = () => {},
+  rowSelectionModel = { type: "include", ids: new Set() },
+  setRowSelectionModel = () => {},
+}) => {
+  useEffect(() => {
+    onSelectionChange(getSelectedRowIds(rowSelectionModel, rows));
+  }, [rowSelectionModel, rows]);
+
   return (
-    <Box sx={{ height: 600, width: "100%" }}>
+    <Box sx={{ height: 683, width: "100%" }}>
       <DataGrid
         columns={columns}
         rows={rows}
-        slots={{ noRowsOverlay: CustomNoRowsOverlay, toolbar: CustomToolbar }}
+        checkboxSelection={checkboxSelection}
+        isRowSelectable={(params) => {
+          return params?.row?.outstandingAmt === 0 ? false : true;
+        }}
+        disableRowSelectionOnClick
+        rowSelectionModel={rowSelectionModel}
+        onRowSelectionModelChange={(newRowSelectionModel) => {
+          setRowSelectionModel(newRowSelectionModel);
+        }}
+        initialState={{
+          pagination: { paginationModel: { pageSize: 10 } },
+        }}
+        pageSizeOptions={[10, 20, 30]}
+        slots={{
+          noRowsOverlay: CustomNoRowsOverlay,
+          toolbar: CustomToolbar,
+        }}
         showToolbar
         loading={loading}
       />
     </Box>
   );
 };
-
 export default DataTable;

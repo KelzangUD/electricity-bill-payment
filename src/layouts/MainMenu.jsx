@@ -22,7 +22,6 @@ export default function MainMenu() {
   const navigation = useNavigate();
   const [openStates, setOpenStates] = useState([]);
   const handleNestedItemClick = (index) => {
-    console.log(index);
     setOpenStates((prevOpenStates) => {
       const isAlreadyOpen = prevOpenStates[index];
       const newOpenStates = prevOpenStates.map(() => false);
@@ -40,8 +39,15 @@ export default function MainMenu() {
           justifyContent: "center",
         }}
       >
-        <Grid container alignItems="center">
-          <Grid size={12} alignItems="center">
+        <Grid
+          container
+          sx={{
+            display: "flex",
+            justifyContent: "space-around",
+            mb: 0.3,
+          }}
+        >
+          <Grid size={4} alignItems="center">
             <Button
               type="button"
               variant="text"
@@ -53,14 +59,21 @@ export default function MainMenu() {
                 src={Logo}
                 alt="Logo"
                 style={{
-                  width: "28%",
+                  width: "90%",
                   height: "auto",
                 }}
               />
             </Button>
           </Grid>
-          <Grid size={12} marginBottom={1}>
-            <Typography variant="body2" sx={{ textAlign: "center" }}>
+          <Grid
+            size={8}
+            alignContent="center"
+            sx={{
+              lineHeight: 0.2,
+            }}
+          >
+            <Typography variant="subtitle2">TashiCell</Typography>
+            <Typography variant="caption" color="textSecondary">
               Electricity Bill Payment
             </Typography>
           </Grid>
@@ -90,9 +103,29 @@ export default function MainMenu() {
                       navigation(item?.route);
                     }
                   }}
+                  sx={{
+                    borderLeft: "3px solid transparent",
+                    transition: "color 0.3s ease, border-left-color 0.3s ease",
+                    ":hover": {
+                      borderLeft: "3px solid #1976d2",
+                      color: "#1976d2",
+                    },
+                  }}
                 >
-                  <ListItemIcon>{item.icon}</ListItemIcon>
-                  <ListItemText style={{ marginLeft: -26 }}>
+                  {/* <ListItemIcon>{item.icon}</ListItemIcon> */}
+                  <ListItemIcon
+                    sx={{
+                      color: "inherit", // <- inherit from ListItemButton
+                      minWidth: 40, // keep default spacing if needed
+                    }}
+                  >
+                    {React.isValidElement(item.icon)
+                      ? React.cloneElement(item.icon, {
+                          sx: { color: "inherit" },
+                        })
+                      : item.icon}
+                  </ListItemIcon>
+                  <ListItemText>
                     <Typography variant="body2">{item?.module}</Typography>
                   </ListItemText>
                   {item.nestedItems &&
@@ -105,9 +138,29 @@ export default function MainMenu() {
                   navigation(item?.route);
                   handleNestedItemClick(item?.itemNumber);
                 }}
+                sx={{
+                  borderLeft: "3px solid transparent",
+                  transition: "color 0.3s ease, border-left-color 0.3s ease",
+                  ":hover": {
+                    borderLeft: "3px solid #1976d2",
+                    color: "#1976d2",
+                  },
+                }}
               >
-                <ListItemIcon>{item.icon}</ListItemIcon>
-                <ListItemText style={{ marginLeft: -26 }}>
+                {/* <ListItemIcon>{item.icon}</ListItemIcon> */}
+                <ListItemIcon
+                  sx={{
+                    color: "inherit", // <- inherit from ListItemButton
+                    minWidth: 40, // keep default spacing if needed
+                  }}
+                >
+                  {React.isValidElement(item.icon)
+                    ? React.cloneElement(item.icon, {
+                        sx: { color: "inherit" },
+                      })
+                    : item.icon}
+                </ListItemIcon>
+                <ListItemText>
                   <Typography variant="body2">{item?.module}</Typography>
                 </ListItemText>
                 {item.nestedItems &&
@@ -125,16 +178,25 @@ export default function MainMenu() {
                     <ListItemButton
                       key={nestedIndex}
                       onClick={() => navigation(nestedItem?.route)}
+                      sx={{
+                        borderLeft: "3px solid transparent",
+                        transition: "color 0.3s ease, border-left-color 0.3s ease",
+                        ":hover": {
+                          borderLeft: "3px solid #1976d2",
+                          color: "#1976d2",
+                        },
+                      }}
                     >
-                      <ListItemIcon>
-                        <KeyboardArrowRightIcon
-                          fontSize="small"
-                          sx={{
-                            color: "#fff",
-                          }}
-                        />
+                      <ListItemIcon
+                        sx={{
+                          color: "inherit",
+                          minWidth: 40,
+                          marginLeft: 1,
+                        }}
+                      >
+                        <KeyboardArrowRightIcon fontSize="small" />
                       </ListItemIcon>
-                      <ListItemText style={{ marginLeft: -26 }}>
+                      <ListItemText>
                         <Typography variant="body2">
                           {nestedItem?.page}
                         </Typography>

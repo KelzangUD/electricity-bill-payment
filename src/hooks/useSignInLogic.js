@@ -63,6 +63,7 @@ export default function useSignInLogic() {
             localStorage.setItem("refresh_token", res?.data?.refresh_token);
             localStorage.setItem("username", decoded?.username);
             localStorage.setItem("role", decoded?.roles[1]);
+            window.dispatchEvent(new Event("tokenUpdated"));
             navigate("/home");
           }
         }
@@ -93,6 +94,6 @@ export default function useSignInLogic() {
     showNotification,
     setShowNotification,
     notificationMessage,
-    severity
+    severity,
   };
 }

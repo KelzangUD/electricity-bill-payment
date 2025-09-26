@@ -11,9 +11,8 @@ services:
     environment:
       - CHOKIDAR_USEPOLLING=true
       - CHOKIDAR_INTERVAL=1000
-      - WATCHPACK_POLLING=true   # ensures webpack 5 polls
+      - WATCHPACK_POLLING=true
     volumes:
-      - ./src:/app/src           # mount only source files
-      - ./public:/app/public
-      - /app/node_modules        # preserve container deps
+      - .:/app
+      - /app/node_modules
     command: npm start

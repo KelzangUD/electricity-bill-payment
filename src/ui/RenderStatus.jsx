@@ -32,7 +32,7 @@ const StyledChip = styled(Chip)(({ theme }) => ({
     color: (theme.vars || theme).palette.warning.dark,
     border: `1px solid ${(theme.vars || theme).palette.warning.main}`,
   },
-  "&.Rejected, &.Failed, &.Inactive, &.In-Active": {
+  "&.Rejected, &.Failed, &.Inactive, &.In-Active &.Transaction Failed": {
     color: (theme.vars || theme).palette.error.dark,
     border: `1px solid ${(theme.vars || theme).palette.error.main}`,
   },
@@ -61,7 +61,7 @@ const Status = memo((props) => {
     status === "Paid"
   ) {
     icon = <DoneIcon className="icon" />;
-  } else if (status === "Inactive") {
+  } else if (status === "Inactive" || status === "Transaction Failed") {
     icon = <CloseIcon className="icon" />;
   }
 
@@ -80,6 +80,9 @@ const Status = memo((props) => {
   }
   if (status === "UnPaid") {
     label = "Un Paid";
+  }
+  if (status === "Transaction Failed") {
+    label = "Failed";
   }
   return (
     <StyledChip

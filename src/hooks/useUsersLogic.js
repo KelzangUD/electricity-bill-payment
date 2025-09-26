@@ -1,4 +1,4 @@
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Route from "../routes/Route";
 
 export default function useUsersLogic() {

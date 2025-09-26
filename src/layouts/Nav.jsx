@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import {
   AppBar,
   Box,
+  Breadcrumbs,
   Drawer,
   IconButton,
   ListItemIcon,
@@ -14,6 +15,7 @@ import {
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import PersonIcon from "@mui/icons-material/Person";
 import MenuIcon from "@mui/icons-material/Menu";
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 // import HomeIcon from "@mui/icons-material/Home";
 import Logout from "@mui/icons-material/Logout";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -69,7 +71,7 @@ const Nav = () => {
       onClose={handleMenuClose}
       sx={{
         width: 440,
-        marginTop: 10,
+        marginTop: 5,
       }}
     >
       <MenuItem onClick={profileHandle}>
@@ -98,8 +100,8 @@ const Nav = () => {
         mt: 10,
         [`& .${drawerClasses.paper}`]: {
           boxSizing: "border-box",
-          color: "#fff",
-          backgroundColor: "#0277bd",
+          color: "#000",
+          backgroundColor: "#hsl(0deg 0% 96.86%)",
         },
       }}
     >
@@ -114,10 +116,10 @@ const Nav = () => {
         position="static"
         sx={{
           boxShadow: "none",
-          paddingY: "21px",
-          marginBottom: 4,
-          background: "#0277bd",
-          color: "#fff",
+          marginBottom: 2,
+          backgroundColor: "hsl(0deg 0% 96.86%)",
+          color: "#000",
+          borderBottom: "1px solid hsl(240 4.8% 85.9%)",
         }}
       >
         <Toolbar sx={{ justifyContent: "space-between" }}>
@@ -134,16 +136,17 @@ const Nav = () => {
             </IconButton>
           </Box>
           <Typography
-            variant="subtitle1"
+            variant="body2"
             noWrap
             sx={{
-              mr: 2,
+              ml: -2,
               display: "flex",
-              fontWeight: 400,
               color: "inherit",
               textDecoration: "none",
+              alignItems: "center",
             }}
           >
+            <NavigateNextIcon sx={{ mb: 0.2 }} color="textSecondary" />
             {currentLocation.toUpperCase()}
           </Typography>
           <Box>

@@ -1,5 +1,13 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { SignIn, Dashboard, Home, Users, Meters } from "./pages/index";
+import {
+  SignIn,
+  Dashboard,
+  Home,
+  Users,
+  Meters,
+  BillPayment,
+  Report
+} from "./pages/index";
 
 const router = createBrowserRouter([
   {
@@ -12,7 +20,9 @@ const router = createBrowserRouter([
     children: [
       { index: true, Component: Dashboard },
       { path: "meters", Component: Meters },
+      { path: "bill-payment", Component: BillPayment },
       { path: "users", Component: Users },
+      { path: "report", Component: Report },
     ],
   },
 ]);

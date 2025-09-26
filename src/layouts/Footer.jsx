@@ -9,12 +9,16 @@ const Footer = () => {
           container
           sx={{
             display: "flex",
-            justifyContent: "flex-end"
+            justifyContent: "flex-end",
           }}
         >
-          <Grid item xs={6}>
-            <Typography variant="body1" sx={{ color: "text.secondary", textAlign: "right" }}>
-              © {new Date().getFullYear()} Software & Application Section. All Right Reserved.
+          <Grid size={6}>
+            <Typography
+              variant="body1"
+              sx={{ color: "text.secondary", textAlign: "right" }}
+            >
+              © {new Date().getFullYear()} Software & Application Section. All
+              Right Reserved.
             </Typography>
           </Grid>
         </Grid>

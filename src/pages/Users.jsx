@@ -21,7 +21,7 @@ const Users = () => {
     <>
       <Box
         sx={{
-          paddingX: 4,
+          paddingX: 2,
         }}
       >
         <Grid container spacing={2}>
