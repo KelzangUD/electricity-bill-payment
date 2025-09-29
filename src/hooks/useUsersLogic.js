@@ -47,7 +47,6 @@ export default function useUsersLogic() {
         null,
         null
       );
-      console.log(response);
       if (response?.status === 200) {
         setUserDetails(response?.data);
         setEdit(true);

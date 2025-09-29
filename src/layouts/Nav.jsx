@@ -1,93 +1,58 @@
-import React, { useState, useEffect } from "react";
+import { forwardRef, useState, useEffect } from "react";
 import {
   AppBar,
   Box,
-  Breadcrumbs,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
   Drawer,
   IconButton,
-  ListItemIcon,
-  MenuItem,
-  Menu,
+  Slide,
   Toolbar,
-  // Tooltip,
   Typography,
 } from "@mui/material";
-import AccountCircle from "@mui/icons-material/AccountCircle";
-import PersonIcon from "@mui/icons-material/Person";
 import MenuIcon from "@mui/icons-material/Menu";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
-// import HomeIcon from "@mui/icons-material/Home";
 import Logout from "@mui/icons-material/Logout";
 import { useNavigate, useLocation } from "react-router-dom";
 import { drawerClasses } from "@mui/material/Drawer";
 import MainMenu from "./MainMenu";
 
+const Transition = forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
+
 const Nav = () => {
   const location = useLocation();
   const navigation = useNavigate();
   const [currentLocation, setCurrentLocation] = useState("");
-  const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
-  const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+  const [showLogOutDialog, setShowLogOutDialog] = useState(false);
   useEffect(() => {
     setCurrentLocation(location?.pathname?.split("/").pop());
   }, [location]);
-
-  const handleProfileMenuOpen = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
 
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
   };
 
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-    handleMobileMenuClose();
-  };
-
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
-  const profileHandle = () => {
-    navigation("/home/profile");
-    setAnchorEl(false);
-  };
 
-  const logoutHandle = async () => {
+  const logoutHandle = () => {
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("refresh_token");
+    localStorage.removeItem("role");
+    localStorage.removeItem("username");
     navigation("/");
   };
 
   const menuId = "primary-search-account-menu";
-  const renderMenu = (
-    <Menu
-      anchorEl={anchorEl}
-      anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
-      id={menuId}
-      keepMounted
-      transformOrigin={{ horizontal: "right", vertical: "bottom" }}
-      open={isMenuOpen}
-      onClose={handleMenuClose}
-      sx={{
-        width: 440,
-        marginTop: 5,
-      }}
-    >
-      <MenuItem onClick={profileHandle}>
-        <ListItemIcon>
-          <PersonIcon fontSize="small" />
-        </ListItemIcon>
-        My Profile
-      </MenuItem>
-      <MenuItem onClick={logoutHandle}>
-        <ListItemIcon>
-          <Logout fontSize="small" />
-        </ListItemIcon>
-        Logout
-      </MenuItem>
-    </Menu>
-  );
 
   const mobileMenuId = "primary-search-account-menu-mobile";
   const renderMobileSideMenu = (
@@ -110,6 +75,37 @@ const Nav = () => {
       </Box>
     </Drawer>
   );
+  const renderLogOutDialog = (
+    <Dialog
+      open={showLogOutDialog}
+      slots={{
+        transition: Transition,
+      }}
+      keepMounted
+      onClose={() => setShowLogOutDialog(false)}
+      aria-describedby="alert-dialog"
+    >
+      <DialogTitle>Confirmation</DialogTitle>
+      <DialogContent>
+        <DialogContentText id="alert-dialog">
+          Are you sure you want to sign out?
+        </DialogContentText>
+      </DialogContent>
+      <DialogActions sx={{ mr: 2, mb: 2 }}>
+        <Button
+          variant="outlined"
+          color="error"
+          onClick={() => setShowLogOutDialog(false)}
+          size="small"
+        >
+          Cancel
+        </Button>
+        <Button variant="contained" size="small" onClick={logoutHandle}>
+          Confirmed
+        </Button>
+      </DialogActions>
+    </Dialog>
+  );
   return (
     <>
       <AppBar
@@ -122,8 +118,14 @@ const Nav = () => {
           borderBottom: "1px solid hsl(240 4.8% 85.9%)",
         }}
       >
-        <Toolbar sx={{ justifyContent: "space-between" }}>
-          <Box sx={{ display: { xs: "flex", md: "none" } }}>
+        <Toolbar sx={{ display: "flex", alignItems: "center" }} spacing={2}>
+          <Box
+            sx={{
+              display: { xs: "flex", md: "none" },
+              marginRight: { xs: 2 },
+              width: "10%",
+            }}
+          >
             <IconButton
               size="small"
               aria-label="show more"
@@ -135,22 +137,37 @@ const Nav = () => {
               <MenuIcon />
             </IconButton>
           </Box>
-          <Typography
-            variant="body2"
-            noWrap
+          <Box
             sx={{
-              ml: -2,
               display: "flex",
-              color: "inherit",
-              textDecoration: "none",
+              justifyContent: "space-between",
+              width: "100%",
               alignItems: "center",
             }}
           >
-            <NavigateNextIcon sx={{ mb: 0.2 }} color="textSecondary" />
-            {currentLocation.toUpperCase()}
-          </Typography>
-          <Box>
-            {/* <Tooltip title="Redirect to SSO">
+            <Box>
+              <Typography
+                variant="body2"
+                noWrap
+                sx={{
+                  ml: -2,
+                  display: "flex",
+                  color: "inherit",
+                  textDecoration: "none",
+                  alignItems: "center",
+                }}
+              >
+                <NavigateNextIcon sx={{ mb: 0.2 }} color="textSecondary" />
+                {currentLocation.toUpperCase()}
+              </Typography>
+            </Box>
+            <Box
+              sx={{
+                ml: "auto", // pushes this Box to the right
+                alignItems: "flex-end",
+              }}
+            >
+              {/* <Tooltip title="Redirect to SSO">
               <IconButton
                 size="small"
                 edge="end"
@@ -165,27 +182,26 @@ const Nav = () => {
                 <HomeIcon sx={{ height: { xs: 20, md: 25 }, width: "auto" }} />
               </IconButton>
             </Tooltip> */}
-            <IconButton
-              size="small"
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-              sx={{
-                marginLeft: 2,
-              }}
-            >
-              <AccountCircle
-                sx={{ height: { xs: 20, md: 25 }, width: "auto" }}
-              />
-            </IconButton>
+              <IconButton
+                size="small"
+                edge="end"
+                aria-label="account of current user"
+                aria-controls={menuId}
+                aria-haspopup="true"
+                onClick={() => setShowLogOutDialog(true)}
+                color="inherit"
+                sx={{
+                  marginLeft: 2,
+                }}
+              >
+                <Logout sx={{ height: { xs: 20, md: 25 }, width: "auto" }} />
+              </IconButton>
+            </Box>
           </Box>
         </Toolbar>
       </AppBar>
       {renderMobileSideMenu}
-      {renderMenu}
+      {renderLogOutDialog}
     </>
   );
 };

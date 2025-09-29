@@ -12,14 +12,16 @@ const useEditUserLogic = (fetchUsers, userDetails) => {
     roleId: userDetails?.role_id || "",
     updatedBy: localStorage.getItem("username"),
     userId: userDetails?.user_id || "",
-    empId: userDetails?.user_code || "",
+    user_code: userDetails?.user_code || "",
+    empl_id: parseInt(userDetails?.empl_id) || "",
+    user_id: userDetails?.user_id || "",
   });
   const [helperText, setHelperText] = useState({
     fname: { message: "", type: "" },
     mobileNo: { message: "", type: "" },
     email: { message: "", type: "" },
     roleId: { message: "", type: "" },
-    empId: { message: "", type: "" },
+    user_code: { message: "", type: "" },
   });
   const [showNotification, setShowNotification] = useState(false);
   const [notificationMessage, setNotificationMessage] = useState("");
@@ -82,12 +84,11 @@ const useEditUserLogic = (fetchUsers, userDetails) => {
       try {
         const res = await Route(
           "PUT",
-          `/api/v1/management?fname=${newUserDetails?.fname}&mname=${newUserDetails?.mname}&lname=${newUserDetails?.lname}&mobileNo=${newUserDetails?.mobileNo}&email=${newUserDetails?.email}&status=Active&roleId=${newUserDetails?.roleId}&updatedBy=${newUserDetails?.updatedBy}&userId=${newUserDetails?.userId}&empId=${newUserDetails?.empId}`,
+          `/api/v1/management?fname=${newUserDetails?.fname}&mname=${newUserDetails?.mname}&lname=${newUserDetails?.lname}&mobileNo=${newUserDetails?.mobileNo}&email=${newUserDetails?.email}&status=Active&roleId=${newUserDetails?.roleId}&updatedBy=${newUserDetails?.updatedBy}&userId=${newUserDetails?.userId}&userCode=${newUserDetails?.user_code}&empId=${newUserDetails?.empl_id}`,
           access_token,
           null,
           null
         );
-        console.log(res);
         if (res?.status === 200) {
           setNotificationMessage("User Details Updated Successfully!");
           setShowNotification(true);
@@ -101,7 +102,7 @@ const useEditUserLogic = (fetchUsers, userDetails) => {
             roleId: "",
             updatedBy: localStorage.getItem("username"),
             userId: "",
-            empId: "",
+            user_code: "",
           });
           fetchUsers();
         }

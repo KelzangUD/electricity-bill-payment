@@ -115,21 +115,21 @@ export default function EditUser({ open, setOpen, fetchUsers, userDetails }) {
             </Grid>
             <Grid size={4}>
               <TextField
-                name="empId"
+                name="user_code"
                 variant="outlined"
                 label="Emp ID"
                 size="small"
                 required
-                value={newUserDetails?.empId}
+                value={newUserDetails?.user_code}
                 onChange={onChangeHandler}
-                error={helperText?.empId?.type === "error"}
-                helperText={helperText?.empId?.message}
+                error={helperText?.user_code?.type === "error"}
+                helperText={helperText?.user_code?.message}
                 FormHelperTextProps={{
                   sx: {
                     color:
-                      helperText.empId.type === "error"
+                      helperText.user_code.type === "error"
                         ? "error.main"
-                        : helperText.empId.type === "success"
+                        : helperText.user_code.type === "success"
                         ? "success.main"
                         : "warning.main",
                   },

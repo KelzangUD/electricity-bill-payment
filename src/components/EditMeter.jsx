@@ -65,6 +65,7 @@ export default function EditMeter({
                 required
                 fullWidth
                 value={newMeterDetails?.meterNo}
+                disabled
                 onChange={onChangeHandler}
                 error={helperText?.meterNo?.type === "error"}
                 helperText={helperText?.meterNo?.message}
@@ -82,7 +83,7 @@ export default function EditMeter({
             </Grid>
             <Grid size={6}>
               <TextField
-                name="billingAddress"
+                name="meterName"
                 variant="outlined"
                 label="Billing Address"
                 size="small"
@@ -112,6 +113,7 @@ export default function EditMeter({
                 size="small"
                 required
                 value={newMeterDetails?.regionId || ""}
+                disabled
                 onChange={onChangeHandler}
                 error={helperText?.regionId?.type === "error"}
                 helperText={helperText?.regionId?.message}

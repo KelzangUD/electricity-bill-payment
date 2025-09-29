@@ -85,7 +85,7 @@ const useAddNewUserLogic = (fetchUsers) => {
       try {
         const res = await Route(
           "POST",
-          "/api/v1/mangement",
+          "/api/v1/management",
           access_token,
           userDetails,
           null
@@ -107,6 +107,10 @@ const useAddNewUserLogic = (fetchUsers) => {
             createdBy: localStorage.getItem("username"),
           });
           fetchUsers();
+        } else {
+          setNotificationMessage("Failed To Create New User!");
+          setSeverity("error");
+          setShowNotification(true);
         }
       } catch (err) {
         setNotificationMessage("Failed To Create New User!");

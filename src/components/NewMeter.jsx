@@ -161,7 +161,12 @@ export default function NewMeter({ open, setOpen, fetchMeters }) {
           >
             Cancel
           </Button>
-          <Button onClick={createHandler} variant="contained" size="small" loading={isLoading}>
+          <Button
+            onClick={createHandler}
+            variant="contained"
+            size="small"
+            loading={isLoading}
+          >
             Create
           </Button>
         </DialogActions>
@@ -172,7 +177,9 @@ export default function NewMeter({ open, setOpen, fetchMeters }) {
           open={showNotification}
           setOpen={() => {
             setShowNotification(false);
-            setOpen(false);
+            if (severity === "success") {
+              setOpen(false);
+            }
           }}
           message={notificationMessage}
           severity={severity}

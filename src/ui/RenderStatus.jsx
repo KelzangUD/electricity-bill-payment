@@ -7,6 +7,7 @@ import CallReceivedIcon from "@mui/icons-material/CallReceived";
 import NotInterestedIcon from "@mui/icons-material/NotInterested";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import CloseIcon from "@mui/icons-material/Close";
+import UnpublishedIcon from "@mui/icons-material/Unpublished";
 import Chip from "@mui/material/Chip";
 import { styled } from "@mui/material/styles";
 
@@ -18,11 +19,13 @@ const StyledChip = styled(Chip)(({ theme }) => ({
   },
   "&.Active,": {
     color: (theme.vars || theme).palette.info.dark,
-    border: `1px solid ${(theme.vars || theme).palette.info.main}`,
+    border: "none",
+    backgroundColor: "#BBFBFF",
   },
   "&.Received, &.Success, &.Approved, &.Closed, &.Paid": {
     color: (theme.vars || theme).palette.success.dark,
-    border: `1px solid ${(theme.vars || theme).palette.success.main}`,
+    border: "none",
+    backgroundColor: "#B6EADA",
   },
   "&.Submitted": {
     color: (theme.vars || theme).palette.primary.dark,
@@ -30,11 +33,12 @@ const StyledChip = styled(Chip)(({ theme }) => ({
   },
   "&.PartiallyFilled, &.In-Progress, &.In-Transit, &.UnPaid": {
     color: (theme.vars || theme).palette.warning.dark,
-    border: `1px solid ${(theme.vars || theme).palette.warning.main}`,
+    border: "none",
   },
   "&.Rejected, &.Failed, &.Inactive, &.In-Active &.Transaction Failed": {
     color: (theme.vars || theme).palette.error.dark,
-    border: `1px solid ${(theme.vars || theme).palette.error.main}`,
+    border: "none",
+    backgroundColor: "#F7CAC9",
   },
 }));
 
@@ -61,7 +65,9 @@ const Status = memo((props) => {
     status === "Paid"
   ) {
     icon = <DoneIcon className="icon" />;
-  } else if (status === "Inactive" || status === "Transaction Failed") {
+  } else if (status === "Inactive") {
+    icon = <UnpublishedIcon className="icon" />;
+  } else if (status === "Transaction Failed") {
     icon = <CloseIcon className="icon" />;
   }
 
@@ -91,6 +97,11 @@ const Status = memo((props) => {
       size="small"
       label={label}
       variant="outlined"
+      sx={{
+        fontWeight: "bold",
+        py: 0.5,
+        px: 1,
+      }}
     />
   );
 });

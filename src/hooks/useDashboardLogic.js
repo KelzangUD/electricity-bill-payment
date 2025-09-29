@@ -16,7 +16,7 @@ export default function useDashboardLogic() {
   const [recentPayments, setRecentPayments] = useState([]);
   const [monthlyBillPayments, setMonthlyBillPayments] = useState([]);
   const [years, setYears] = useState([]);
-  const [year, setYear] = useState(new Date().getFullYear());
+  const [year, setYear] = useState(new Date().getFullYear().toString());
 
   const fetchCount = useCallback(async () => {
     const accessToken = localStorage.getItem("access_token");

@@ -1,4 +1,3 @@
-import React from "react";
 import { Box, CardContent, Typography } from "@mui/material";
 
 const StatusCard = ({ title, value, icon }) => {
@@ -22,7 +21,14 @@ const StatusCard = ({ title, value, icon }) => {
           <Typography variant="caption" color="textSecondary" gutterBottom>
             {title}
           </Typography>
-          <Typography variant="h5">{value}</Typography>
+          <Typography
+            variant="h5"
+            sx={{
+              fontWeight: "bold",
+            }}
+          >
+            {value}
+          </Typography>
         </Box>
         <Box>{icon}</Box>
       </CardContent>

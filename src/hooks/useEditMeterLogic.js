@@ -6,7 +6,7 @@ const useEditMeterLogic = (fetchMeters, meterDetails) => {
   const [newMeterDetails, setNewMeterDetails] = useState({
     meterNo: meterDetails?.meterNo || "",
     meterName: meterDetails?.meterName || "",
-    createdBy: localStorage.getItem("username"),
+    updatedBy: localStorage.getItem("username"),
     regionId: meterDetails?.regionId || "",
     status: meterDetails?.status || "Inactive",
     meterId: meterDetails?.meterId || "",
@@ -71,20 +71,19 @@ const useEditMeterLogic = (fetchMeters, meterDetails) => {
       try {
         const res = await Route(
           "PUT",
-          "/api/v1/meter",
+          `/api/v1/meter?meterId=${newMeterDetails?.meterId}&billingAddress=${newMeterDetails?.meterName}&updatedBy=${newMeterDetails?.updatedBy}&regionId=${newMeterDetails?.regionId}&status=${newMeterDetails?.status}`,
           access_token,
-          newMeterDetails,
+          null,
           null
         );
-        console.log(res);
-        if (res?.status === 201) {
+        if (res?.status === 200) {
           setNotificationMessage("Meter Details Updated Successfully!");
-          setShowNotification(true);
           setSeverity("success");
-          newMeterDetails({
+          setShowNotification(true);
+          setNewMeterDetails({
             meterNo: "",
             billingAddress: "",
-            createdBy: localStorage.getItem("username"),
+            updatedBy: localStorage.getItem("username"),
             regionId: "",
             status: "Inactive",
             meterId: "",
