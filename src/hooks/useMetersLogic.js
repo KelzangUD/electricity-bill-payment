@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Route from "../routes/Route";
 
 const useMetersLogic = () => {
@@ -18,6 +18,8 @@ const useMetersLogic = () => {
     region_name: "",
     meterName: "",
   });
+  const fileInputRef = useRef(null);
+  const [selectedFile, setSelectedFile] = useState(null);
   const fetchMeters = async () => {
     setIsLoading(true);
     try {
@@ -29,7 +31,6 @@ const useMetersLogic = () => {
         null
       );
       if (response?.status === 200) {
-        console.log(response?.data);
         setMeters(
           response?.data?.map((item, index) => ({
             id: item?.meterId,
@@ -45,7 +46,6 @@ const useMetersLogic = () => {
     }
   };
   const fetchDetails = async (meterId) => {
-    console.log(meterId);
     setIsLoading(true);
     try {
       const response = await Route(
@@ -56,7 +56,6 @@ const useMetersLogic = () => {
         null
       );
       if (response?.status === 200) {
-        console.log(response?.data);
         setMeterDetails(response?.data);
         setEdit(true);
       }
@@ -64,8 +63,63 @@ const useMetersLogic = () => {
       setNotificationMessage("Failed To Fetch Meter Details!");
       setSeverity("error");
       setShowNotification(true);
-      console.log(err);
     } finally {
+      setIsLoading(false);
+    }
+  };
+  const clearFile = () => {
+    setSelectedFile(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  };
+  const bulkUploadHandler = async (e) => {
+    setIsLoading(true);
+    try {
+      let data = new FormData();
+      setSelectedFile(e?.target?.files[0]);
+      data.append("File", e?.target?.files[0]);
+      data.append("createdBy", localStorage.getItem("username"));
+      const res = await Route(
+        "POST",
+        `/api/v1/meter/uploadMeter`,
+        access_token,
+        data,
+        null,
+        "multipart/form-data"
+      );
+      if (res?.status === 201) {
+        setNotificationMessage("Bulk Upload Successful!");
+        setSeverity("success");
+        setShowNotification(true);
+        fetchMeters();
+      }
+      if (res?.status === 400) {
+        // console.log("response 400 " + res);
+        setNotificationMessage("Failed to upload meter details! Try again");
+        setSeverity("error");
+        setShowNotification(true);
+      }
+      if (res?.status === 409) {
+        // console.log("response 409 " + res);
+        setNotificationMessage(
+          "Duplicate consumer no. found. Verify the consumer no, try again!"
+        );
+        setSeverity("error");
+        setShowNotification(true);
+      }
+      if (res?.status === 500) {
+        // console.log("response 500 " + res);
+        setNotificationMessage("Failed to upload meter details! Try again");
+        setSeverity("error");
+        setShowNotification(true);
+      }
+    } catch (error) {
+      setNotificationMessage("Error", error);
+      setSeverity("error");
+      setShowNotification(true);
+    } finally {
+      clearFile();
       setIsLoading(false);
     }
   };
@@ -87,6 +141,10 @@ const useMetersLogic = () => {
     showNotification,
     setShowNotification,
     fetchDetails,
+    bulkUploadHandler,
+    fileInputRef,
+    clearFile,
+    selectedFile,
   };
 };
 

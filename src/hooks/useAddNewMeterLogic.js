@@ -85,7 +85,6 @@ const useAddNewMeterLogic = (fetchMeters) => {
           });
           fetchMeters();
         } else if (res?.status === 400) {
-          console.log(res?.response);
           setNotificationMessage(res?.response?.data?.message);
           setShowNotification(true);
           setSeverity("error");
@@ -94,7 +93,6 @@ const useAddNewMeterLogic = (fetchMeters) => {
         setNotificationMessage("Failed To Create New Meter!");
         setSeverity("error");
         setShowNotification(true);
-        console.log(err);
       } finally {
         setIsLoading(false);
       }

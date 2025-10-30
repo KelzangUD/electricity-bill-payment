@@ -41,7 +41,16 @@ export default function Notification({
               <CheckCircleIcon sx={{ fontSize: 100, mb: 1 }} color={severity} />
             )}
 
-            <Typography variant="h6" color={severity}>
+            <Typography
+              variant="p"
+              color={severity}
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                fontWeight: "bold",
+                fontSize: "24px"
+              }}
+            >
               {severity.toUpperCase()}!
             </Typography>
             <Typography variant="body2" sx={{ my: 1 }}>

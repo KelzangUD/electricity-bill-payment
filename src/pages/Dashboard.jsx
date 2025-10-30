@@ -44,7 +44,7 @@ const Dashboard = () => {
                 sx={{
                   width: "auto",
                   height: 30,
-                  color: "#4CAF50"
+                  color: "#4CAF50",
                 }}
               />
             }
@@ -59,7 +59,7 @@ const Dashboard = () => {
                 sx={{
                   width: "auto",
                   height: 30,
-                  color: "#F44336"
+                  color: "#F44336",
                 }}
               />
             }
@@ -67,14 +67,14 @@ const Dashboard = () => {
         </Grid>
         <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
           <StatusCard
-            title="Average Payment"
+            title="Outstanding Balance"
             value={`Nu. ${count?.avgPaymentAmt || 0}/-`}
             icon={
               <CreditCardIcon
                 sx={{
                   width: "auto",
                   height: 30,
-                  color: "#9C27B0"
+                  color: "#9C27B0",
                 }}
               />
             }

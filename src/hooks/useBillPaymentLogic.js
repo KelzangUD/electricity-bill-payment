@@ -6,6 +6,7 @@ const useBillPaymentLogic = () => {
   const username = localStorage.getItem("username");
   const [isLoading, setIsLoading] = useState(false);
   const [meters, setMeters] = useState([]);
+  const [region, setRegion] = useState("ALL");
   const [showNotification, setShowNotification] = useState(false);
   const [notificationMessage, setNotificationMessage] = useState("");
   const [severity, setSeverity] = useState("success");
@@ -15,12 +16,15 @@ const useBillPaymentLogic = () => {
     ids: new Set(),
   });
 
+  const regionChangeHandler = (event) => {
+    setRegion(event?.target?.value);
+  };
   const fetchMeters = async () => {
     setIsLoading(true);
     try {
       const response = await Route(
         "GET",
-        "/api/v1/billpayment",
+        `/api/v1/billpayment?region=${region}`,
         access_token,
         null,
         null
@@ -46,7 +50,9 @@ const useBillPaymentLogic = () => {
     try {
       const response = await Route(
         "POST",
-        `/api/v1/billpayment?meterNo=${selectedRows?.join(",")}&createdBy=${username}`,
+        `/api/v1/billpayment?meterNo=${selectedRows?.join(
+          ","
+        )}&createdBy=${username}`,
         access_token,
         null,
         null
@@ -91,6 +97,9 @@ const useBillPaymentLogic = () => {
     setShowNotification,
     rowSelectionModel,
     setRowSelectionModel,
+    region,
+    regionChangeHandler,
+    fetchMeters,
   };
 };
 

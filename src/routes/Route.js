@@ -41,11 +41,14 @@ const Route = async (
       return response;
     }
   } catch (error) {
-    console.log(error)
     if (error?.response?.status === 403) {
       window?.location?.replace("/");
       return;
-    } else if(error?.response?.status === 400) {
+    } else if (error?.response?.status === 400) {
+      return error;
+    } else if (error?.response?.status === 409) {
+      return error;
+    } else if (error?.response?.status === 500) {
       return error;
     }
   }

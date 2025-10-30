@@ -1,10 +1,20 @@
-import { Alert, Box, Button, Grid } from "@mui/material";
+import {
+  Alert,
+  Box,
+  Button,
+  Grid,
+  MenuItem,
+  Skeleton,
+  TextField,
+} from "@mui/material";
 import CreditScoreIcon from "@mui/icons-material/CreditScore";
 import { DataTable, Loader, Notification } from "../ui/index";
 import { BillPaymentColumns } from "../constants/columns";
 import useBillPaymentLogic from "../hooks/useBillPaymentLogic";
+import { useCommon } from "../contexts/CommonContext";
 
 const BillPayment = () => {
+  const { regions } = useCommon();
   const {
     isLoading,
     meters,
@@ -17,6 +27,9 @@ const BillPayment = () => {
     setShowNotification,
     rowSelectionModel,
     setRowSelectionModel,
+    region,
+    regionChangeHandler,
+    fetchMeters,
   } = useBillPaymentLogic();
 
   return (
@@ -33,6 +46,42 @@ const BillPayment = () => {
               pay for specific meters, select the checkboxes for the
               corresponding rows.
             </Alert>
+          </Grid>
+          <Grid size={12}>
+            {regions ? (
+              <TextField
+                key="region-select"
+                name="regionId"
+                select
+                label="Region"
+                size="small"
+                sx={{ minWidth: 300, backgroundColor: "white" }}
+                required
+                value={region || ""}
+                onChange={regionChangeHandler}
+                SelectProps={{
+                  MenuProps: { disablePortal: true },
+                }}
+              >
+                <MenuItem value="ALL">ALL</MenuItem>
+                {regions.map((r) => (
+                  <MenuItem key={r.id} value={r.id}>
+                    {r.name}
+                  </MenuItem>
+                ))}
+              </TextField>
+            ) : (
+              <Skeleton variant="rectangular" width={300} height={40} />
+            )}
+            <Button
+              variant="contained"
+              sx={{
+                marginLeft: 2,
+              }}
+              onClick={fetchMeters}
+            >
+              Fetch
+            </Button>
           </Grid>
           <Grid
             size={12}
